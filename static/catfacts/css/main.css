@@ -1,0 +1,21 @@
+* { 
+  font-family: 'Lato', sans-serif !important; 
+}
+#page_heading {
+  font-size: 6em;
+}
+.small_break {
+  margin-top: 3em
+}
+.center {
+  text-align: center
+}
+.caret {
+  margin-left: 1em;
+  display: inline-table;
+}
+.largeput {
+  font-size: 1.5em;
+  height: 2em;
+  
+}

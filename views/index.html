@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8'>
+    <title>Hello World</title>
+
+    <link rel='stylesheet' href='assets/vendor/bost/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='assets/catfacts/css/main.css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,400italic,700italic' 
+        rel='stylesheet' type='text/css'>
+
+    <script src='https://code.jquery.com/jquery.js'></script>
+    <script src='assets/vendor/bost/js/bootstrap.min.js'></script>
+    <script src='assets/catfacts/js/main.js'></script>
+
+  </head>
+  <body>    
+
+    <div class='container'>
+      <br class='small_break'>
+      <h1 class='center' id='page_heading'>CatFacts.io</h1>
+      <br class='small_break'>
+      <!-- input -->
+      <div class='input-group'>
+        <div class='input-group-btn'>
+          <button type='button' class='btn btn-default largeput' tabindex='-1' 
+              disabled='disabled'>
+            Country
+          </button>
+          <button type='button' class='btn btn-default dropdown-toggle largeput'
+                data-toggle='dropdown' tabindex='-1'>
+            <span class='caret'></span>
+          </button>
+          
+          <ul id='country_ops' class='dropdown-menu pull-left'>
+            <li><a href='#'>Australia</a></li>
+            <li><a href='#'>United Kingdom</a></li>
+            <li><a href='#'>America</a></li>
+          </ul>
+          
+        </div>
+        <input type='text' class='form-control largeput'>
+      </div>
+    </div>
+  </body>
+</html>
