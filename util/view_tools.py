@@ -1,11 +1,10 @@
 import sys; sys.path.append('lib')
+from util.io_tools import contents
 
 _cache = {}
 
 def get_view(view_name):
     if view_name in _cache:
         return _cache[view_name]
-    f = open(view_name, 'r')
-    _cache[view_name] = f.read() 
-    f.close()
+    _cache[view_name] = contents(view_name)
     return _cache[view_name] 

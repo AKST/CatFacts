@@ -1,0 +1,6 @@
+{
+  "sid":"your twilio sid",
+  "token":"your twilio token",
+  "phone_no":"the sending phone number",
+  "test_no":"a test number"
+}

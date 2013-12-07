@@ -5,11 +5,11 @@ $.fn.extend({
         callback.bind(this)()
     })
   },
-  validPhoneNo: function (callback, otherwise) {
+  validPhoneNo: function (concequence, alternative) {
     if ($(this).val().match('^[0-9-+() ]+$')) 
-      callback.bind(this)();
-    else if (otherwise != undefined)
-      otherwise.bind(this)();
+      concequence.bind(this)();
+    else if (alternative != undefined)
+      alternative.bind(this)();
     return this;
   }
 })
