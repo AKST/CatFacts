@@ -1,4 +1,4 @@
-application: cat-facts
+application: catfacts-io
 version: 1
 runtime: python27
 api_version: 1
@@ -7,6 +7,9 @@ threadsafe: yes
 handlers:
 - url: /assets
   static_dir: static
+
+- url: /subscribe.*
+  script: controllers.subscriptions.app
 
 - url: /.*
   script: main.app
