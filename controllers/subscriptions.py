@@ -10,6 +10,7 @@ import json
 import twilio
 
 
+
 conf_details = json.loads(contents('conf.json'))
 
 sid = conf_details['sid']

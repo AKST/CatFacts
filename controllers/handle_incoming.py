@@ -11,6 +11,7 @@ import json
 import twilio
 
 
+
 conf_details = json.loads(contents('conf.json'))
 sid = conf_details['sid']
 token = conf_details['token']
@@ -33,9 +34,9 @@ class RouteIncoming(webapp2.RequestHandler):
     def post(self):
         sender = self.request.get('From')
         msg_id = self.request.get('MessageSid')
-        msg    = client.messages.get(msg_id).body
+        msg    = client.messages.get(msg_id).body.lower()
 
-        if msg.lower() == 'y' or msg.lower() == 'n':
+        if msg == 'y' or msg == 'n':
             destination = 'confirm'
         else:
             destination = 'help'
@@ -49,13 +50,18 @@ class LogIncoming(webapp2.RequestHandler):
         number = self.request.get('From')
         loc    = self.request.get('FromCountry')  
         logging.info('\nnumber:   %s\nlocation: %s' % (number, loc))
-  
+
+
+
+CONFIRM_SUB = 'Purrfect'
+FALSE_FLAG= 'Opps sorry'
+
 
 
 class ConfirmSubscription(webapp2.RequestHandler):
     def post(self):
         sender = self.request.get('sender')
-        response = "Mee-wow" if self.request.get('msg').lower() == 'y' else ':('
+        response = CONFIRM_SUB if self.request.get('msg') == 'y' else FALSE_FLAG
         client.sms.messages.create(
             body  = response,
             to    = self.request.get('sender'),
@@ -80,8 +86,6 @@ app = webapp2.WSGIApplication([
     ('/mailbox/route',   RouteIncoming), 
     ('/mailbox',         CheckIncoming),
 ], debug=True)
-
-
 
 
 
