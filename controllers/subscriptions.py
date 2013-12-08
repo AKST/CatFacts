@@ -3,7 +3,6 @@ import sys; sys.path.append('lib')
 from util.io_tools import contents
 from twilio.rest import TwilioRestClient  
 from google.appengine.api import taskqueue
-from google.appengine.api import background_thread as thread
 
 import webapp2
 import logging
@@ -20,27 +19,24 @@ client = TwilioRestClient(sid, token)
 
 class SubscribeNumbers(webapp2.RequestHandler):
     def post(self):
+        number = self.request.params['ph']
         taskqueue.add(url='/subscribe/notify', params={
-            'ph': conf_details['test_no']
+            'ph': number
         })        
 
 
 class NofifySubscriber(webapp2.RequestHandler):
     def post(self):
         try:
+            subscriber = self.request.params['ph']
             client.sms.messages.create(
                 body  = "Would you like to subscribe to cat facts? [y/n]",
-                to    = self.request.params['ph'],
+                to    = subscriber,
                 from_ = conf_details['phone_no'])
             logging.info('%s was asked to subscribe' % subscriber)
         except twilio.TwilioRestException as e:
             self.response.status = 500
             logging.error(e)
-
-
-class RespondToMessage(webapp2.RequestHandler):
-    def post(self):
-        pass
 
 
 app = webapp2.WSGIApplication([

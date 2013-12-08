@@ -5,14 +5,19 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /favicon.ico
+  static_files: static/catfacts/img/favicon.ico
+  upload: static/catfacts/img/favicon.ico
 - url: /assets
   static_dir: static
 
 - url: /subscribe.*
   script: controllers.subscriptions.app
-
+- url: /mailbox.*
+  script: controllers.handle_incoming.app
 - url: /.*
   script: main.app
+
 
 libraries:
 - name: webapp2

@@ -5,7 +5,11 @@ function remove_alert() {
   $('#ph_form').removeClass('has-error')
 }
 function submitPhoneNo() {
-  $.post('subscribe?ph=' + $(this).val())
+  var value = $(this).val().replace('+', '%2b');
+  $.post('subscribe?ph=' + value)
+}
+function clearField() {
+  $(this).val('')
 }
 
 $(function () {
@@ -15,7 +19,9 @@ $(function () {
 
   $('#submission').enterPress(function () {
     $(this).validPhoneNo(
-      remove_alert.and(submitPhoneNo), 
+      remove_alert.and(
+        submitPhoneNo.bind(this)).and(
+        clearField), 
       add_alert)
   })
 })
