@@ -11,11 +11,6 @@ import json
 import twilio
 
 
-LOG_TEMP = """
-number:   %s
-location: %s
-message:  %s"""
-
 conf_details = json.loads(contents('conf.json'))
 sid = conf_details['sid']
 token = conf_details['token']
@@ -25,7 +20,8 @@ client = TwilioRestClient(sid, token)
 
 class CheckIncoming(webapp2.RequestHandler):
     def post(self):
-        taskqueue.add(url='/mailbox/handle', params=self.request.params)
+        taskqueue.add(url='/mailbox/route', params=self.request.params)
+        taskqueue.add(url='/mailbox/log', params=self.request.params)
         res = twiml.Response()        
         res.say("")
         self.response.headers['Content-Type'] = 'text/xml'
@@ -33,25 +29,56 @@ class CheckIncoming(webapp2.RequestHandler):
 
 
 
-class HandleIncoming(webapp2.RequestHandler):
+class RouteIncoming(webapp2.RequestHandler):
     def post(self):
-        number = self.request.get('From')
-        loc = self.request.get('FromCountry')  
+        sender = self.request.get('From')
         msg_id = self.request.get('MessageSid')
-        msg = client.messages.get(msg_id).body
+        msg    = client.messages.get(msg_id).body
 
-        logging.info(LOG_TEMP % (number, loc, msg))
+        if msg.lower() == 'y' or msg.lower() == 'n':
+            destination = 'confirm'
+        else:
+            destination = 'help'
 
+        taskqueue.add(url="/mailbox/"+destination, params=locals())
+
+
+
+class LogIncoming(webapp2.RequestHandler):
+    def post(self):       
+        number = self.request.get('From')
+        loc    = self.request.get('FromCountry')  
+        logging.info('\nnumber:   %s\nlocation: %s' % (number, loc))
+  
+
+
+class ConfirmSubscription(webapp2.RequestHandler):
+    def post(self):
+        sender = self.request.get('sender')
+        response = "Mee-wow" if self.request.get('msg').lower() == 'y' else ':('
         client.sms.messages.create(
-            body  = "Meow",
-            to    = number,
+            body  = response,
+            to    = self.request.get('sender'),
+            from_ = conf_details['phone_no'])
+
+
+
+class HelpMessage(webapp2.RequestHandler):
+    def post(self):
+        sender = self.request.get('sender')
+        client.sms.messages.create(
+            body  = "Sorry, me no comprehende",
+            to    = sender,
             from_ = conf_details['phone_no'])
 
 
 
 app = webapp2.WSGIApplication([
-    ('/mailbox/handle', HandleIncoming), 
-    ('/mailbox',        CheckIncoming),
+    ('/mailbox/help',    HelpMessage),
+    ('/mailbox/confirm', ConfirmSubscription),
+    ('/mailbox/log',     LogIncoming),
+    ('/mailbox/route',   RouteIncoming), 
+    ('/mailbox',         CheckIncoming),
 ], debug=True)
 
 

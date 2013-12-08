@@ -17,6 +17,7 @@ token = conf_details['token']
 client = TwilioRestClient(sid, token)
 
 
+
 class SubscribeNumbers(webapp2.RequestHandler):
     def post(self):
         number = self.request.params['ph']
@@ -25,18 +26,20 @@ class SubscribeNumbers(webapp2.RequestHandler):
         })        
 
 
+
 class NofifySubscriber(webapp2.RequestHandler):
     def post(self):
         try:
             subscriber = self.request.params['ph']
             client.sms.messages.create(
-                body  = "Would you like to subscribe to cat facts? [y/n]",
+                body  = "Would you like to subscribe to cat facts? [Y/N]",
                 to    = subscriber,
                 from_ = conf_details['phone_no'])
             logging.info('%s was asked to subscribe' % subscriber)
         except twilio.TwilioRestException as e:
             self.response.status = 500
             logging.error(e)
+
 
 
 app = webapp2.WSGIApplication([
