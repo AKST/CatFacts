@@ -57,21 +57,26 @@ class LogIncoming(webapp2.RequestHandler):
 
 
 
+def exists_query(sender):
+    query = Subscriber.query_subs(ALL)\
+            .filter(Subscriber.phone_no == sender)\
+            .fetch(1)
+    return bool(query), query
+
+
+
 CONFIRM_SUB = "Purrfect! To unsubscribe at any time text Q."
-FALSE_FLAG= 'Opps sorry.'
 
 class ConfirmSubscription(webapp2.RequestHandler):
     def post(self):
-        sender   = self.request.get('sender')
-        response = CONFIRM_SUB if self.request.get('msg') == 'y' else FALSE_FLAG
-
-        if self.request.get('msg') == 'y':
+        sender    = self.request.get('sender')
+        exists, _ = exists_query(sender)
+        if self.request.get('msg') == 'y' and not exists:
             Subscriber(parent=ALL, phone_no=sender).put()
-          
-        client.sms.messages.create(
-            body  = response,
-            to    = sender,
-            from_ = conf_details['phone_no'])
+            client.sms.messages.create(
+                body  = CONFIRM_SUB,
+                to    = sender,
+                from_ = conf_details['phone_no'])
 
 
 
@@ -79,18 +84,14 @@ UNSUB_MSG = 'So long.'
 
 class Unsubscribe(webapp2.RequestHandler):
     def post(self):
-        sender = self.request.get('sender')
-        query = Subscriber.query_subs(ALL)\
-            .filter(Subscriber.phone_no == sender)\
-            .fetch(1)
-
-        if query:
-            query[0].key.delete()
-
-        client.sms.messages.create(
-            body  = UNSUB_MSG,
-            to    = sender,
-            from_ = conf_details['phone_no']) 
+        sender    = self.request.get('sender')
+        exists, q = exists_query(sender) 
+        if exists:
+            q[0].key.delete()
+            client.sms.messages.create(
+                body  = UNSUB_MSG,
+                to    = sender,
+                from_ = conf_details['phone_no']) 
 
 
 
