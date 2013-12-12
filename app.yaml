@@ -11,10 +11,13 @@ handlers:
 - url: /assets
   static_dir: static
 
+# add proper security 
 - url: /subscribe.*
   script: controllers.subscriptions.app
 - url: /mailbox.*
   script: controllers.handle_incoming.app
+- url: /broadcast.*
+  script: cron.update.app 
 - url: /.*
   script: main.app
 

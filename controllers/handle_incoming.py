@@ -10,6 +10,8 @@ import logging
 import json
 import twilio
 
+from models.subscriber import ALL, Subscriber
+
 
 
 conf_details = json.loads(contents('conf.json'))
@@ -38,6 +40,8 @@ class RouteIncoming(webapp2.RequestHandler):
 
         if msg == 'y' or msg == 'n':
             destination = 'confirm'
+        elif msg == 'q':
+            destination = 'unsubscribe'
         else:
             destination = 'help'
 
@@ -53,38 +57,64 @@ class LogIncoming(webapp2.RequestHandler):
 
 
 
-CONFIRM_SUB = 'Purrfect'
-FALSE_FLAG= 'Opps sorry'
-
-
+CONFIRM_SUB = "Purrfect! To unsubscribe at any time text Q."
+FALSE_FLAG= 'Opps sorry.'
 
 class ConfirmSubscription(webapp2.RequestHandler):
     def post(self):
-        sender = self.request.get('sender')
+        sender   = self.request.get('sender')
         response = CONFIRM_SUB if self.request.get('msg') == 'y' else FALSE_FLAG
+
+        if self.request.get('msg') == 'y':
+            Subscriber(parent=ALL, phone_no=sender).put()
+          
         client.sms.messages.create(
             body  = response,
-            to    = self.request.get('sender'),
+            to    = sender,
             from_ = conf_details['phone_no'])
 
 
+
+UNSUB_MSG = 'So long.'
+
+class Unsubscribe(webapp2.RequestHandler):
+    def post(self):
+        sender = self.request.get('sender')
+        query = Subscriber.query_subs(ALL)\
+            .filter(Subscriber.phone_no == sender)\
+            .fetch(1)
+
+        if query:
+            query[0].key.delete()
+
+        client.sms.messages.create(
+            body  = UNSUB_MSG,
+            to    = sender,
+            from_ = conf_details['phone_no']) 
+
+
+
+HELP_MSG = "Sorry, me no comprehende. " +\
+           "To subscribe text Y, to " +\
+           "unsubscribe text Q."
 
 class HelpMessage(webapp2.RequestHandler):
     def post(self):
         sender = self.request.get('sender')
         client.sms.messages.create(
-            body  = "Sorry, me no comprehende",
+            body  = HELP_MSG,
             to    = sender,
             from_ = conf_details['phone_no'])
 
 
 
 app = webapp2.WSGIApplication([
-    ('/mailbox/help',    HelpMessage),
-    ('/mailbox/confirm', ConfirmSubscription),
-    ('/mailbox/log',     LogIncoming),
-    ('/mailbox/route',   RouteIncoming), 
-    ('/mailbox',         CheckIncoming),
+    ('/mailbox/help',        HelpMessage),
+    ('/mailbox/unsubscribe', Unsubscribe),
+    ('/mailbox/confirm',     ConfirmSubscription),
+    ('/mailbox/log',         LogIncoming),
+    ('/mailbox/route',       RouteIncoming), 
+    ('/mailbox',             CheckIncoming),
 ], debug=True)
 
 

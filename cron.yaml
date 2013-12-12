@@ -1,0 +1,4 @@
+cron:
+  - description: the enlightenment
+    url: /broadcast/enlightenment
+    schedule: every 1 hours
