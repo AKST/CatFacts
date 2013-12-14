@@ -37,3 +37,18 @@ h2 + p {
   margin-top: 1em;
   margin-bottom: 2em;
 }
+@media only screen and (min-width : 991px) {
+  .mobile {
+    display: none;
+  }
+}
+@media only screen and (max-width : 990px) {
+  .desktop {
+    display: none;
+  }
+  #sub_button {
+    width: 2.2em;
+  }
+}
+
+

@@ -19,8 +19,3 @@ function setTextOf(dom_selector) {
     $(dom_selector).text($(this).text())
   }}
 }
-
-Function.prototype.and = function and(next) {
-  this();
-  return next;
-}
