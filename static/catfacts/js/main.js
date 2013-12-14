@@ -25,3 +25,7 @@ $(function () {
       add_alert)
   })
 })
+
+$(window).scroll(function () {
+  $('#cat_o_vision').css('background-position-y', window.pageYOffset/2 + 1075)
+})

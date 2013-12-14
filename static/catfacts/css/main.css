@@ -1,21 +1,39 @@
-* { 
-  font-family: 'Lato', sans-serif !important; 
+p, button, input { 
+  font-family: 'Lato', sans-serif; 
 }
-#page_heading {
-  font-size: 6em;
+.ribbon-wrapper {
+  overflow: hidden;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  z-index: 9999;
+} 
+h1, h2, .jumbotron p, [class='navbar-brand'] {
+  font-family: 'Merriweather', serif;
 }
-.small_break {
-  margin-top: 3em
-}
-.center {
-  text-align: center
-}
-.caret {
-  margin-left: 1em;
-  display: inline-table;
+h1 {
+  font-weight: 900;
 }
 .largeput {
-  font-size: 1.5em;
-  height: 2em;
-  
+  font-size: 1.1em;
+  height: 2em
+}
+.jumbotron {
+  margin-top: 51px;
+  background: url('/assets/catfacts/img/i.jpg') fixed;
+  background-position: fixed;
+  background-width: auto;
+  color: #fff;
+  background-position-y: 1075px;
+  background-position-x: 50%;
+}
+.jumbotron h1 {
+  text-shadow: 0.07em 0.07em #333
+} 
+.container p {
+  font-size: 1.2em
+}
+h2 + p {
+  margin-top: 1em;
+  margin-bottom: 2em;
 }
