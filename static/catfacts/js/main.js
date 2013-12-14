@@ -36,7 +36,7 @@
   
   });
   
-  $(window).scroll(function () {
+  if (window.innerWidth > 991) $(window).scroll(function () {
     $('#cat_o_vision').css('background-position-y', window.pageYOffset/2 + 1075)
   })
 
