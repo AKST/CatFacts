@@ -12,6 +12,9 @@ handlers:
   static_dir: static
 
 # add proper security 
+- url: /init.*
+  script: controllers.init.app
+  login: admin
 - url: /subscribe.*
   script: controllers.subscriptions.app
 - url: /mailbox.*
