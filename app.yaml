@@ -14,7 +14,7 @@ handlers:
 # add proper security 
 - url: /init.*
   script: controllers.init.app
-  login: admin
+  #login: admin
 - url: /subscribe.*
   script: controllers.subscriptions.app
 - url: /mailbox.*
