@@ -1,42 +1,47 @@
 (function () {
-  
-  var TABLET_WIDTH = 767;
+  var SUBMIT_BTN   = '#sub_button',
+      SUBMIT_FIELD = '#submission',
+      JUMBOTRON    = '#cat_o_vision',
+      PHONE_FORM   = '#ph_form',
+      TABLET_WIDTH = 767;
 
   function add_alert() {
-    $('#ph_form').addClass('has-error');
-    $('#sub_button').addClass('btn-danger');
-    $('#sub_button').removeClass('btn-success');
+    $(PHONE_FORM).addClass('has-error');
+    $(SUBMIT_BTN).addClass('btn-danger');
+    $(SUBMIT_BTN).removeClass('btn-success');
   }
+
   function remove_alert() {
-    $('#ph_form').removeClass('has-error');
-    $('#sub_button').addClass('btn-success');
-    $('#sub_button').removeClass('btn-danger');
+    $(PHONE_FORM).removeClass('has-error');
+    $(SUBMIT_BTN).addClass('btn-success');
+    $(SUBMIT_BTN).removeClass('btn-danger');
   }
+
   function submitPhoneNo() {
-    var value = $(this).val().replace('+', '%2b');
+    var value = sanitizeRaw($(this).val());
     $.post('subscribe?ph=' + value);
   }
+
   function clearField() {
     $(this).val('');
   }
 
   function submit () {
-    $('#submission').validPhoneNo(function () {
+    $(SUBMIT_FIELD).validPhoneNo(function () {
       remove_alert();
-      submitPhoneNo.bind(this)();
-      clearField.bind(this)();
+      submitPhoneNo.call(this);
+      clearField.call(this);
     }, add_alert);
   }
   
   $(function () {
-    $('#country_ops li a').click(setTextOf('#country_name').toThisText)
-    $('#submission').enterPress(submit);
-    $('#sub_button').click(submit);
+    $(SUBMIT_FIELD).enterPress(submit);
+    $(SUBMIT_BTN).click(submit);
   });
   
 
   if (window.innerWidth > TABLET_WIDTH) $(window).scroll(function () {
-    $('#cat_o_vision').css('background-position-y', window.pageYOffset/2 + 1075);
-  })
+    $(JUMBOTRON).css('background-position-y', window.pageYOffset/2 + 1075);
+  });
 
 })();

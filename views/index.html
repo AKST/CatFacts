@@ -17,6 +17,7 @@
         rel='stylesheet' type='text/css'>
 
     <script src='https://code.jquery.com/jquery.js'></script>
+    <script src='assets/vendor/underscore-min.js'></script>
     <script src='assets/vendor/bost/js/bootstrap.min.js'></script>
     <script src='assets/catfacts/js/funcs.js'></script>
     <script src='assets/catfacts/js/main.js'></script>
@@ -48,7 +49,6 @@
           <div class='input-group-btn'>
             <button type='button' id='sub_button' class='btn btn-success largeput' 
                     tabindex='-1'>
-
               <span class='mobile glyphicon glyphicon-envelope'></span>
               <span class='desktop'>Subscribe</span> 
             </button>
@@ -58,36 +58,59 @@
     </div>
 
     <div class='container'>
-      <h2>What is Catfacts.io?</h2>
-      <p>
-        Catfacts.io was a fun project I made to trial certain tools, and is based on
-        the <a href='http://www.buzzfeed.com/mattcherette/masterful-cat-facts-texting-prank'>
-        catfacts pranks</a> that was popular while back. Only this implementation
-        is less spammy, and you can unsubscribe at 
-        any time.
-      </p>
-
-      <h2>What happens when I subscribe?</h2>
-      <p>
-        When you enter your number in the field above you will be sent a confirmation
-        text asking if it was really you that subscribed your own phone number. You
-        can confirm or deny this by responding with Y or N.
-      </p>
-      
-      <h2>Can I unsubscribe?</h2>
-      <p>
-        Once you subscribe you are told that, you can unsubscribe at any time by texting
-        Q to catfacts. Once you text this, your number is removed from catfacts and you
-        will no longer receive catfacts.
-      </p>
-
-      <h2>How can I trust Catfacts?</h2>
-      <p>
-        Catfacts is open source, meaning all it's code is freely avaible online for both 
-        use, extension, miroring, criticism, and whatever else. But most importantly it means
-        catfacts acts transparently so you can be sure we aren't doing any thing malicious
-        with your phone number.      
-      </p>
+      <div class='row'>
+        <div class='col-md-6'>
+          <h2>What is Catfacts.io?</h2>
+          <p>
+            Catfacts.io was a fun project I made to trial certain tools, and is based on the
+            <a href='http://www.buzzfeed.com/mattcherette/masterful-cat-facts-texting-prank'>
+            catfacts pranks</a> that was popular while back. Only this implementation
+            is less spammy, and you can unsubscribe at any time.
+          </p>
+        </div>
+        <div class='col-md-6'>
+          <h2>Can I unsubscribe?</h2>
+          <p>
+            Once you subscribe you are told that, you can unsubscribe at any time by texting
+            Q to catfacts. Once you text this, your number is removed from catfacts and you
+            will no longer receive catfacts. 
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6'>
+          <h2>Can I trust Catfacts?</h2>
+          <p>
+            Catfacts is open source (MIT), meaning all it's code is freely avaible 
+            online for free use, extension, mirroring, critique, and whatever else. But most 
+            importantly it means catfacts is transparent in a way that you can be sure it's 
+            not doing any thing malicious with your phone number, if you have any suspicions.  
+            Just remember this isn't a serious project, so I don't plan take responiblity 
+            for any incidents, so be smart.
+          </p>
+        </div>
+        <div class='col-md-6'>
+          <h2>What happens when I subscribe?</h2>
+          <p>
+            When you enter your number in the field above you will be sent a confirmation
+            text asking if it was really you that subscribed your own phone number. You
+            can confirm or deny this by responding with Y or N. So you don't have to worry 
+            about being signed up without being aware of it, this also means if you decide
+            subscribe your friend they will be notified.
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class='footer'>
+      <div class='container'>
+        <p class='text-center'>Catfacts.io is built by Angus Thomsen</p>
+        <p class='text-center'>
+          source available on
+          <a href='https://github.com/AKST/CatFacts'>
+            Github
+          </a>
+        </p>
+      </div>
     </div>
   </body>
 </html>
