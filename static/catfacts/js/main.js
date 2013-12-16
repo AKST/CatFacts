@@ -18,7 +18,7 @@
   }
 
   function submitPhoneNo() {
-    var value = sanitizeRaw($(this).val());
+    var value = sanitizeInput($(this).val());
     $.post('subscribe?ph=' + value);
   }
 
