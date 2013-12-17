@@ -31,4 +31,3 @@ var sanitizeInput = (function () {
   }
 })();
 
-console.log(sanitizeInput("+(123) 1234-1234"))

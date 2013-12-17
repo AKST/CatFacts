@@ -1,9 +1,9 @@
 p, button, input { 
-  font-family: 'Lato', sans-serif; 
+  font-family: 'PT Sans', sans-serif; 
 }
 .ribbon-wrapper {
   overflow: hidden;
-  position: absolute;
+  position: fixed;
   top: -3px;
   right: 0px;
   z-index: 9999;
@@ -14,9 +14,12 @@ h1, h2, .jumbotron p, [class='navbar-brand'] {
 h1 {
   font-weight: 900;
 }
+h2 {
+  font-weight: 700;
+}
 .largeput {
   font-size: 1.1em;
-  height: 2em
+  height: 1.8em
 }
 .jumbotron {
   margin-top: 51px;
