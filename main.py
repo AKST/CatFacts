@@ -11,6 +11,13 @@ class MainHandler(webapp2.RequestHandler):
         self.response.write(page)
 
 
+class RequireMainHandler(webapp2.RequestHandler):
+    def get(self):
+        page = get_view('views/require_index.html')
+        self.response.write(page)
+
+
 app = webapp2.WSGIApplication([
-    ('/',          MainHandler)
+    ('/test',      RequireMainHandler),
+    ('/',          MainHandler),
 ], debug=True)
