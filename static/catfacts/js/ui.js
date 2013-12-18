@@ -1,4 +1,25 @@
-define(['jquery', 'consts'], function ($, consts) {
+define(['jquery', 'consts', 'bacon'], function ($, consts) {
+
+
+  function keySteam(id, code) {
+    return $(id).asEventStream('keydown')
+      .filter(function (event) { return event.keyCode === code });
+  }
+
+  function clickStream(id) {
+    return $(id).asEventStream('click')
+  }
+
+  function submissionContent() {
+    return $('#submission').val(); 
+  }
+
+  function submitStream() {
+    return keySteam('#submission', 13)
+      .merge(clickStream('#sub_button'))
+      .map(submissionContent);
+  }
+  
 
   function isTouchDevice() {
     return window.innerWidth > consts.TABLET_WIDTH;
@@ -16,7 +37,8 @@ define(['jquery', 'consts'], function ($, consts) {
 
 
   return {
-    'setupParralaxBg': setupParralaxBg,
-    'isTouchDevice':   isTouchDevice
+    'setupParralaxBg':  setupParralaxBg,
+    'isTouchDevice':    isTouchDevice,
+    'submitStream':     submitStream
   };
 });

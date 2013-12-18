@@ -15,11 +15,14 @@ require.config({
     bootstrap: 'vendor/bost/js/bootstrap.min.js'
   },
   shim: {
-    underscore: { exports: '_'}
+    underscore: { exports: '_'},
+    bootstrap: { deps: ['jquery'] },
+    bacon: { deps: ['jquery'] }
   }
 });
 
+
 require(['jquery', 'app'], function ($, app) { 
   app.beforeDOM()
-  $(app.init)
+  $(document).ready(app.init)
 });
