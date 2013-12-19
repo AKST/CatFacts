@@ -8,7 +8,7 @@ import webapp2
 import logging
 import json
 import twilio
-
+import re
 
 
 conf_details = json.loads(contents('conf.json'))
@@ -18,13 +18,20 @@ token = conf_details['token']
 client = TwilioRestClient(sid, token)
 
 
+def validPhoneNo(number):
+    return number[0] == '+' and len(number) > 3 and re.search(r'^[0-9-+() ]+$', number)
+
+
 
 class SubscribeNumbers(webapp2.RequestHandler):
     def post(self):
         number = self.request.get('phonenumber')
-        taskqueue.add(url='/subscribe/notify', params={
-            'ph': number
-        })        
+        if validPhoneNo(number):
+            taskqueue.add(url='/subscribe/notify', params={'ph': number})        
+        else:
+            self.response.content_type = 'text/plain'
+            self.response.status = 400
+            self.response.write('invalid phone number')
 
 
 
