@@ -24,6 +24,6 @@ require.config({
 
 
 require(['jquery', 'app'], function ($, app) { 
-  app.beforeDOM()
-  $(document).ready(app.init)
+  app.beforeDom()
+  $(document).ready(app.afterDom)
 });

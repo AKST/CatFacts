@@ -47,7 +47,7 @@ define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
 
 
   return { 
-    'init':      afterDom,
-    'beforeDOM': beforeDOM 
+    'afterDom':      afterDom,
+    'beforeDom': beforeDOM 
   };
 });
