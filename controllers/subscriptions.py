@@ -21,7 +21,7 @@ client = TwilioRestClient(sid, token)
 
 class SubscribeNumbers(webapp2.RequestHandler):
     def post(self):
-        number = self.request.params['ph']
+        number = self.request.get('phonenumber')
         taskqueue.add(url='/subscribe/notify', params={
             'ph': number
         })        

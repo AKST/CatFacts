@@ -16,7 +16,10 @@ define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
 
 
   function submitNumber(phoneNo) {
-    console.log(phoneNo) 
+    var submit = $.post('/subscribe', { 'phonenumber': phoneNo })
+    submit.done(function (done) {
+      
+    });
   }
 
 
@@ -39,6 +42,7 @@ define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
     validSubmit.onValue(submitNumber)    
     validSubmit.onValue(ui.clearField('#submission'))
     validSubmit.onValue(removeAlert)
+    validSubmit.onValue(util.playSound('assets/catfacts/audio/meow.mp3', 0.2))
   }
 
 

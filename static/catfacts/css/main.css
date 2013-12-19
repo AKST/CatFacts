@@ -1,3 +1,6 @@
+audio {
+  display: none;
+}
 p, button, input { 
   font-family: 'PT Sans', sans-serif; 
 }
