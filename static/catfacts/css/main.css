@@ -11,7 +11,7 @@ p, button, input {
   right: 0px;
   z-index: 9999;
 } 
-h1, h2, .jumbotron p, [class='navbar-brand'] {
+h1, h2, h3, h4, .jumbotron p, [class='navbar-brand'] {
   font-family: 'Merriweather', serif;
 }
 h1 {

@@ -13,7 +13,7 @@ require.config({
     bacon: 'vendor/Bacon.min',
     jquery: 'vendor/jquery-2.0.3.min',
     underscore: 'vendor/underscore-min',
-    bootstrap: 'vendor/bost/js/bootstrap.min.js'
+    bootstrap: 'vendor/bost/js/bootstrap.min'
   },
   shim: {
     underscore: { exports: '_'},

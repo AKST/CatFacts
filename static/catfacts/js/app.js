@@ -1,4 +1,4 @@
-define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
+define(['consts', 'ui', 'util', 'jquery', 'bootstrap'], function (consts, ui, util, $) {
 
 
   function removeAlert(_) {
@@ -15,11 +15,23 @@ define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
   }
 
 
+  function successfulModal(res) {
+    $('#success_msg').modal()
+  }
+
+
+  function errorModal(res) {
+    $('#400_msg').modal()
+  }
+
+
   function submitNumber(phoneNo) {
     var submit = $.post('/subscribe', { 'phonenumber': phoneNo })
-    submit.done(function (done) {
-      
-    });
+
+    submit.done(successfulModal)
+    submit.done(util.playSound('assets/catfacts/audio/meow.mp3', 0.2))
+
+    submit.fail(errorModal)
   }
 
 
@@ -42,12 +54,11 @@ define(['consts', 'ui', 'util', 'jquery'], function (consts, ui, util, $) {
     validSubmit.onValue(submitNumber)    
     validSubmit.onValue(ui.clearField('#submission'))
     validSubmit.onValue(removeAlert)
-    validSubmit.onValue(util.playSound('assets/catfacts/audio/meow.mp3', 0.2))
   }
 
 
   return { 
-    'afterDom':      afterDom,
+    'afterDom':  afterDom,
     'beforeDom': beforeDOM 
   };
 });
