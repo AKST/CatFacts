@@ -6,6 +6,7 @@ require.config({
     // catfacts modules
     ui: 'catfacts/js/ui',
     app: 'catfacts/js/app',
+    util: 'catfacts/js/util',
     consts: 'catfacts/js/consts',
 
     // vendor modules
