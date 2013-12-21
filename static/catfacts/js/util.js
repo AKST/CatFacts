@@ -10,8 +10,7 @@ define([], function () {
            
 
   function validPhoneNum(phoneNo) {
-    return phoneNo[0] === '+' 
-        && phoneNo.length > 3
+    return phoneNo.length > 3
         && phoneNo.match('^[0-9-+() ]+$')
   }
 

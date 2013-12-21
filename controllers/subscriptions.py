@@ -27,7 +27,10 @@ class SubscribeNumbers(webapp2.RequestHandler):
     def post(self):
         number = self.request.get('phonenumber')
         if validPhoneNo(number):
-            taskqueue.add(url='/subscribe/notify', params={'ph': number})        
+            taskqueue.add(
+                url='/subscribe/notify', 
+                params={'ph': number},
+                retry_options=taskqueue.TaskRetryOptions(task_retry_limit=0))        
         else:
             self.response.content_type = 'text/plain'
             self.response.status = 400

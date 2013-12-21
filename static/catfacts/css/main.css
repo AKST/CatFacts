@@ -1,7 +1,7 @@
 audio {
   display: none;
 }
-p, button, input { 
+p, div.alert p,  button, input { 
   font-family: 'PT Sans', sans-serif; 
 }
 .ribbon-wrapper {
@@ -11,7 +11,7 @@ p, button, input {
   right: 0px;
   z-index: 9999;
 } 
-h1, h2, h3, h4, .jumbotron p, [class='navbar-brand'] {
+h1, h2, h3, h4, .jumbotron p, [class='navbar-brand'], .nav li {
   font-family: 'Merriweather', serif;
 }
 h1 {
@@ -45,7 +45,6 @@ h2 + p {
 }
 
 .footer {
-  
   font-size: 0.75em;
   padding-bottom: 2em;
 }
@@ -53,14 +52,22 @@ h2 + p {
   padding-top: 3em;
   border-top: 1px solid #e5e5e5;
 }
+.alert {
+  font-size: 0.65em !important;
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+.hidden {
+  display: none;
+}
 
 
-@media only screen and (min-width : 991px) {
+@media only screen and (min-width : 768px) {
   .mobile {
     display: none;
   }
 }
-@media only screen and (max-width : 990px) {
+@media only screen and (max-width : 767px) {
   .desktop {
     display: none;
   }

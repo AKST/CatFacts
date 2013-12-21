@@ -6,6 +6,34 @@ define(['jquery', 'consts', 'bacon'], function ($, consts) {
   }
 
 
+  function addAlert(form, btn, msg) {
+    return function (_) {
+      if (form !== undefined) 
+        $(form).addClass('has-error')
+      if (btn !== undefined) {
+        $(btn).addClass('btn-danger')
+        $(btn).removeClass('btn-success')
+      }
+      if (msg !== undefined)
+        $(msg).removeClass('hidden')
+    }
+  }
+  
+
+  function removeAlert(form, btn, msg) {
+    return function (_) {
+      if (form !== undefined) 
+        $(form).removeClass('has-error')
+      if (btn !== undefined) {
+        $(btn).removeClass('btn-danger')
+        $(btn).addClass('btn-success')
+      }
+      if (msg !== undefined)
+        $(msg).addClass('hidden')
+    }
+  }
+
+
   function keySteam(id, code) {
     return $(id).asEventStream('keydown')
       .filter(function (event) { return event.keyCode === code })
@@ -17,20 +45,15 @@ define(['jquery', 'consts', 'bacon'], function ($, consts) {
   }
 
 
-  function submissionContent() {
-    return $('#submission').val(); 
-  }
-
-
-  function submitStream() {
-    return keySteam('#submission', 13)
-      .merge(clickStream('#sub_button'))
-      .map(submissionContent)
+  function fieldSubmitStream(field, btn) {
+    return keySteam(field, 13)
+      .merge(clickStream(btn))
+      .map(function () { return $(field).val() })
   }
   
 
   function isTouchDevice() {
-    return window.innerWidth > consts.TABLET_WIDTH;
+    return navigator.userAgent.match(/(iPhone|iPod|iPad|Android|BlackBerry)/) !== null;
   }
 
 
@@ -47,9 +70,13 @@ define(['jquery', 'consts', 'bacon'], function ($, consts) {
 
 
   return {
-    'clearField':    clearField,
-    'bgParralax':    bgParralax,
+    'clearField': clearField,
+    'addAlert': addAlert,
+    'removeAlert': removeAlert,
+    'bgParralax': bgParralax,
     'isTouchDevice': isTouchDevice,
-    'submitStream':  submitStream
+    'fieldSubmitStream': fieldSubmitStream,
+    'clickStream': clickStream,
+    'keySteam': keySteam
   };
 });

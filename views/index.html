@@ -19,17 +19,29 @@
   </head>
   <body>    
 
-    <a href="https://github.com/AKST/CatFacts">
+    <a href="https://github.com/AKST/CatFacts" class='desktop'>
       <img class='ribbon-wrapper' alt="Fork me on GitHub" 
            src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png">
     </a>
 
-
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
+          <button type='button' class='navbar-toggle'
+                  data-toggle="collapse" 
+                  data-target=".bs-navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <span class="navbar-brand">CatFacts.io</span>
         </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+          <ul class="nav navbar-nav pull-right">
+            <li><a href="#" id='unsubscribe_btn'>Unsubscribe</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
 
@@ -38,51 +50,40 @@
         <h1>CatFacts.io</h1>
         <p id='msg'>Mee Wow!</p>
         <div class='input-group' id='ph_form'>
-          <input type='text' id='submission' class='form-control largeput' 
-                 placeholder='+XX XXXX XXXX'>
+          <input type='text' id='submission' class='form-control largeput' placeholder='+XX XXXX XXXX'>
           <div class='input-group-btn'>
-            <button type='button' id='sub_button' class='btn btn-success largeput' 
-                    tabindex='-1'>
+            <button type='button' id='sub_button' class='btn btn-success largeput' tabindex='-1'>
               <span class='mobile glyphicon glyphicon-envelope'></span>
-              <span class='desktop'>Subscribe</span> 
+              <span class='desktop'>Subscribe</span>
             </button>
           </div>
         </div> 
+        <div class='alert alert-danger fade in hidden' id='invalid_input'>
+          <button type='button' class='close' data-dismiss='alert' aria-hidden='true'>x</button>
+          <h4>Invalid Number Format</h4>
+          <p>
+            Oops, the number you've provided isn't formatted correctly. Make sure that your phone
+            only contains digits or these characters '( ) _ +', '+' is only at the start, and is at least
+            4 characters long. 
+          </p>
+        </div>
       </div>
     </div>
 
     <div class='container'>
       <div class='row'>
-        <div class='col-md-6'>
+        <div class='col-md-12'>
           <h2>What is Catfacts.io?</h2>
           <p>
             Catfacts.io was a fun project I made to trial certain tools, and is based on the
             <a href='http://www.buzzfeed.com/mattcherette/masterful-cat-facts-texting-prank'>
             catfacts pranks</a> that was popular while back. Only this implementation
-            is less spammy, and you can unsubscribe at any time.
-          </p>
-        </div>
-        <div class='col-md-6'>
-          <h2>Can I unsubscribe?</h2>
-          <p>
-            Once you subscribe you are told that, you can unsubscribe at any time by texting
-            Q to catfacts. Once you text this, your number is removed from catfacts and you
-            will no longer receive catfacts. 
+            is less spammy, and you can unsubscribe at any time. If you like it and you want
+            to contribute, just send me a pull request on github.
           </p>
         </div>
       </div>
       <div class='row'>
-        <div class='col-md-6'>
-          <h2>Can I trust Catfacts?</h2>
-          <p>
-            Catfacts is open source (MIT), meaning all it's code is freely avaible 
-            online for free use, extension, mirroring, critique, and whatever else. But most 
-            importantly it means catfacts is transparent in a way that you can be sure it's 
-            not doing any thing malicious with your phone number, if you have any suspicions.  
-            Just remember this isn't a serious project, so I don't plan take responiblity 
-            for any incidents, so be smart.
-          </p>
-        </div>
         <div class='col-md-6'>
           <h2>What happens when I subscribe?</h2>
           <p>
@@ -91,6 +92,40 @@
             can confirm or deny this by responding with Y or N. So you don't have to worry 
             about being signed up without being aware of it, this also means if you decide
             subscribe your friend they will be notified.
+          </p>
+        </div>
+        <div class='col-md-6'>
+          <h2>Can I unsubscribe?</h2>
+          <p>
+            Once you subscribe you are told that, you can unsubscribe at any time by texting
+            Q to catfacts. Once you text this, your number is removed from catfacts and you
+            will no longer receive catfacts. Alternatively you unsubscribe right here from
+            this site in the event twilio (the sms sevice providor) is not working. Just 
+            click <em>unsubscribe</em> in the top right corner, and enter your number. 
+          </p>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-md-6'>
+          <h2>Why am I no longer receving Catfacts?</h2>
+          <p>
+            If you are you no longer receving catfacts, This will likely mean catfacts 
+            has run out of twilio credit, and has stopped 
+            responding/sending out text messages. I may or may not put more credit on the 
+            account when it runs out. This will likely mean you can't unsubscribe via text 
+            message, but that's okay because you still do this via the site at the top of 
+            the page.
+          </p>
+        </div>
+        <div class='col-md-6'>
+          <h2>Can I trust Catfacts?</h2>
+          <p>
+            Catfacts is open source (MIT), meaning all it's code is freely avaible 
+            online for free use, extension, mirroring, critique, and whatever else. But most 
+            importantly it means catfacts is transparent in a way that you can be sure it's 
+            not doing any thing malicious with your phone number, if you have any suspicions.  
+            Just remember this isn't a serious project, so I don't plan take responsibility 
+            for any incidents, so be smart.
           </p>
         </div>
       </div>
@@ -105,6 +140,7 @@
         </p>
       </div>
     </div>
+
     <!-- modals -->
 
     <div class='modal fade' id='400_msg'>
@@ -125,6 +161,7 @@
         </div>
       </div>
     </div>
+
     <div class='modal fade' id='success_msg'>
       <div class='modal-dialog'>
         <div class='modal-content'>
@@ -137,6 +174,33 @@
               You've just submited a subscription request to catfacts, 
               you should receive a confirmation text message soon.
             </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='modal fade' id='unsub_modal'>
+      <div class='modal-dialog'>
+        <div class='modal-content'>
+          <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+            <h4 class='modal-title'>Unsubscribe</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              To unsubscribe just enter your number, and it will be removed from catfacts.
+            </p>
+            <div class='input-group' id='unsub_form'>
+              <input type='text' id='unsub_field' class='form-control largeput' placeholder='+XX XXXX XXXX'>
+              <div class='input-group-btn'>
+                <button type='button' id='confirm_unsub' class='btn btn-success largeput' tabindex='-1'>
+                  <span class='glyphicon glyphicon-certificate'></span>
+                </button>
+              </div>
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
