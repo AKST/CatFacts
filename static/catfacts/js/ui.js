@@ -1,4 +1,18 @@
-define(['jquery', 'consts', 'bacon'], function ($, consts) {
+define(['jquery', 'consts', 'bacon', 'bootstrap'], function ($, consts) {
+
+
+  function modal(id) {
+    return function (res) {
+      $(id).modal('show')
+    }
+  }
+  
+
+  function closeModal(id) {
+    return function (res) {
+      $(id).modal('hide')
+    }
+  }
 
 
   function clearField(field) {
@@ -77,6 +91,8 @@ define(['jquery', 'consts', 'bacon'], function ($, consts) {
     'isTouchDevice': isTouchDevice,
     'fieldSubmitStream': fieldSubmitStream,
     'clickStream': clickStream,
-    'keySteam': keySteam
+    'keySteam': keySteam,
+    'modal': modal,
+    'closeModal': closeModal
   };
 });

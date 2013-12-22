@@ -1,37 +1,20 @@
-define(['consts', 'ui', 'util', 'jquery', 'bootstrap'], function (consts, ui, util, $) {
+define(['consts', 'ui', 'util'], function (consts, ui, util) {
 
 
-  function removeAlert(_) {
-    $('#ph_form').removeClass('has-error')
-    $('#sub_button').removeClass('btn-danger')
-    $('#sub_button').addClass('btn-success')
-    $('#invalid_input').addClass('hidden')
-  }
-
-
-  function addAlert(_) {
-    $('#ph_form').addClass('has-error')
-    $('#sub_button').addClass('btn-danger')
-    $('#sub_button').removeClass('btn-success')
-    $('#invalid_input').removeClass('hidden')
-  }
-
-
-  function modal(id) {
-    return function (res) {
-      $(id).modal()
-    }
-  }
-
-
-  function submitNumber(phoneNo) {
-    phoneNo = phoneNo[0] === '+' ? phoneNo : '+'+phoneNo
-    var submit = $.post('/subscribe', { 'phonenumber': phoneNo })
-
-    submit.done(modal('#success_msg'))
+  function subscribeNumber(phoneNo) {
+    var submit = $.post('/subscribe', { 'phonenumber': util.sanitizeNumber(phoneNo) })
+    submit.done(ui.modal('#success_msg'))
     submit.done(util.playSound('assets/catfacts/audio/meow.mp3', 0.2))
+    submit.fail(ui.modal('#400_msg'))
+  }
 
-    submit.fail(modal('#400_msg'))
+
+  function unsubscribeNumber(phoneNo) {
+    var submit = $.post('/subscribe/undo', { 'phonenumber': util.sanitizeNumber(phoneNo) })
+    submit.done(util.playSound('assets/catfacts/audio/sad_meow.mp3', 0.2))
+    submit.done(ui.closeModal('#unsub_modal'))
+    
+    submit.fail(ui.addAlert(undefined, undefined, '#400_alert'))
   }
 
 
@@ -52,19 +35,20 @@ define(['consts', 'ui', 'util', 'jquery', 'bootstrap'], function (consts, ui, ut
 
     invalidSubmit.onValue(ui.addAlert('#ph_form', '#sub_button', '#invalid_input'))
     
-    validSubmit.onValue(submitNumber) 
+    validSubmit.onValue(subscribeNumber) 
     validSubmit.onValue(ui.clearField('#submission'))
     validSubmit.onValue(ui.removeAlert('#ph_form', '#sub_button', '#invalid_input'))
 
-    ui.clickStream('#unsubscribe_btn').onValue(modal('#unsub_modal'))
+    ui.clickStream('#unsubscribe_btn').onValue(ui.modal('#unsub_modal'))
       
     var unsubStream = ui.fieldSubmitStream('#unsub_field', '#confirm_unsub')
     var validUnsub = unsubStream.filter(valid)
     var invalidUnsub = unsubStream.filter(not(valid))
 
-    invalidUnsub.onValue(ui.addAlert('#unsub_form', '#confirm_unsub'))
+    invalidUnsub.onValue(ui.addAlert('#unsub_form', '#confirm_unsub', '#unsub_alert'))
 
-    validUnsub.onValue(ui.removeAlert('#unsub_form', '#confirm_unsub'))
+    validUnsub.onValue(unsubscribeNumber)
+    validUnsub.onValue(ui.removeAlert('#unsub_form', '#confirm_unsub', '#unsub_alert'))
     validUnsub.onValue(ui.clearField('#unsub_field'))
   }
 

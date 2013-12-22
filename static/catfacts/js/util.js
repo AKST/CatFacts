@@ -13,6 +13,11 @@ define([], function () {
     return phoneNo.length > 3
         && phoneNo.match('^[0-9-+() ]+$')
   }
+  
+
+  function sanitizeNumber(phoneNo) {
+    return phoneNo[0] === '+' ? phoneNo : '+' + phoneNo;
+  }
 
 
   function not(f) {
@@ -23,8 +28,9 @@ define([], function () {
 
 
   return {
-    'playSound':     playSound,
+    'playSound': playSound,
     'validPhoneNum': validPhoneNum,
-    'not':           not
+    'sanitizeNumber': sanitizeNumber, 
+    'not': not
   };
 })

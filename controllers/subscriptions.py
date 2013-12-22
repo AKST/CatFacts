@@ -3,6 +3,7 @@ import sys; sys.path.append('lib')
 from util.io_tools import contents
 from twilio.rest import TwilioRestClient  
 from google.appengine.api import taskqueue
+from controllers.handle_incoming import exists_query
 
 import webapp2
 import logging
@@ -32,9 +33,23 @@ class SubscribeNumbers(webapp2.RequestHandler):
                 params={'ph': number},
                 retry_options=taskqueue.TaskRetryOptions(task_retry_limit=0))        
         else:
-            self.response.content_type = 'text/plain'
             self.response.status = 400
-            self.response.write('invalid phone number')
+
+
+
+class UnsubscribeNumber(webapp2.RequestHandler):
+    def post(self):
+        number = self.request.get('phonenumber')
+        number = ''.join(number.split(' '))
+        if validPhoneNo(number):
+            exists, q = exists_query(number)
+            if exists:
+                q[0].key.delete()
+            else:
+                logging.info('number is non existent')
+                self.response.status = 400
+        else:
+            self.response.status = 400
 
 
 
@@ -55,5 +70,6 @@ class NofifySubscriber(webapp2.RequestHandler):
 
 app = webapp2.WSGIApplication([
     ('/subscribe/notify', NofifySubscriber), 
+    ('/subscribe/undo',   UnsubscribeNumber),
     ('/subscribe',        SubscribeNumbers), 
 ], debug=True)
